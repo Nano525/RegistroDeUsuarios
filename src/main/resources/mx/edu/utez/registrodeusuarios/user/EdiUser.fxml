@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="mx.edu.utez.registrodeusuarios.controllers.user.EdiUserController"
+            prefWidth="900" prefHeight="600">
+
+    <!-- SECCIÓN IZQUIERDA (ICONO DE USUARIO) -->
+    <left>
+        <VBox alignment="CENTER" prefWidth="200"
+              style="-fx-background-color: #d9d9d9;">
+            <ImageView fitHeight="120" fitWidth="120">
+                <Image url="@../assets/.png"/> <!-- Coloca aquí tu ícono -->
+            </ImageView>
+        </VBox>
+    </left>
+
+    <!-- CUERPO PRINCIPAL -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20"
+              style="-fx-padding: 40;">
+
+            <Label text="Editar datos de Usuario"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <!-- CONTENEDOR FORMULARIO -->
+            <VBox spacing="15"
+                  style="-fx-background-color: #e0e0e0;
+                         -fx-padding: 30;
+                         -fx-background-radius: 5;
+                         -fx-border-color: #aaa;
+                         -fx-border-radius: 5;"
+                  prefWidth="450">
+
+                <!-- Nombre -->
+                <VBox spacing="5">
+                    <Label text="Nombre(s)*:"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <TextField fx:id="txtNombre" promptText="Itzel"/>
+                </VBox>
+
+                <!-- Apellidos -->
+                <VBox spacing="5">
+                    <Label text="Apellidos*:"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <TextField fx:id="txtApellidos" promptText="Sanchez Mora"/>
+                </VBox>
+
+                <!-- Correo -->
+                <VBox spacing="5">
+                    <Label text="Correo Electrónico*:"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <TextField fx:id="txtCorreo" promptText="20243ds010@utez.edu.mx"/>
+                </VBox>
+
+                <!-- Contraseña -->
+                <VBox spacing="5">
+                    <Label text="Contraseña*:"
+                           style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    <PasswordField fx:id="txtContrasena" promptText="1234"/>
+                </VBox>
+
+                <!-- BOTÓN GUARDAR -->
+                <HBox alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+                    <Button fx:id="btnGuardar"
+                            text="Guardar"
+                            style="-fx-background-color: white;
+                                   -fx-border-color: #444;
+                                   -fx-background-radius: 5;
+                                   -fx-border-radius: 5;
+                                   -fx-font-weight: bold;
+                                   -fx-pref-width: 120;
+                                   -fx-pref-height: 35;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
