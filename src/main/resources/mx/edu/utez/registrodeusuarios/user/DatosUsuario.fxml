@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.registrodeusuarios.controllers.user.DatosUsuarioController">
+   <children>
+      <!-- Barra lateral izquierda -->
+      <VBox prefHeight="600.0" prefWidth="150.0" style="-fx-background-color: #f0f0f0;">
+         <children>
+            <Region prefHeight="50.0" />
+            <VBox alignment="CENTER" prefHeight="100.0">
+               <children>
+                  <Label style="-fx-font-size: 48px;" text="👤" />
+               </children>
+            </VBox>
+            <Region prefHeight="450.0" />
+         </children>
+      </VBox>
+      
+      <!-- Área principal de contenido -->
+      <VBox prefHeight="600.0" prefWidth="850.0" style="-fx-background-color: white;">
+         <children>
+            <!-- Título -->
+            <HBox prefHeight="80.0" prefWidth="850.0" style="-fx-background-color: white;">
+               <children>
+                  <Region prefWidth="30.0" />
+                  <Label prefHeight="3.0" prefWidth="200.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: black;" text="Datos del Usuario" />
+               </children>
+            </HBox>
+            
+            <!-- Tabla de usuarios -->
+            <HBox prefHeight="520.0" prefWidth="850.0">
+               <children>
+                  <Region prefWidth="30.0" />
+                  <TableView fx:id="tableViewUsuarios" prefHeight="520.0" prefWidth="790.0" style="-fx-border-color: #cccccc; -fx-border-width: 1px;">
+                     <columns>
+                        <!-- Columna Nombre -->
+                        <TableColumn fx:id="colNombre" prefWidth="200.0" text="Nombre" />
+                        
+                        <!-- Columna Correo -->
+                        <TableColumn fx:id="colCorreo" prefWidth="250.0" text="Correo" />
+                        
+                        <!-- Columna Estado -->
+                        <TableColumn fx:id="colEstado" prefWidth="120.0" text="Estado" />
+                        
+                        <!-- Columna Acciones -->
+                        <TableColumn fx:id="colAcciones" prefWidth="220.0" text="Acciones" />
+                     </columns>
+                  </TableView>
+                  <Region prefWidth="30.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
