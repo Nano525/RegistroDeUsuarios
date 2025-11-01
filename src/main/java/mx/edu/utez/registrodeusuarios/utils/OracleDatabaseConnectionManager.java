@@ -8,8 +8,8 @@ import oracle.ucp.jdbc.PoolDataSourceFactory;
 import oracle.ucp.jdbc.PoolDataSource;
 
 public class OracleDatabaseConnectionManager {
-    private static final String WALLET = "src/main/resources/mx/edu/utez/registrodeusuarios/Wallet_Estadias";
-    private static final String DB_NAME = "Estadias_high";
+    private static final String WALLET = "src/main/resources/mx/edu/utez/registrodeusuarios/Wallet_Estadias/Wallet_CoffeTrack";
+    private static final String DB_NAME = "CoffeTrack_high";
     private static final String DB_URL = "jdbc:oracle:thin:@" + DB_NAME + "?TNS_ADMIN=" + WALLET;
     private static final String DB_USER = "ADMIN";
     private static final String DB_PASSWORD = "Pixel&logic5*";

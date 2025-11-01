@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="600" prefWidth="900" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mx.edu.utez.registrodeusuarios.RegistrationController">
+
+    <!-- SECCIÓN IZQUIERDA (ICONO DE USUARIO) -->
+    <left>
+        <VBox alignment="CENTER" prefWidth="200" style="-fx-background-color: #B4B3B2;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" translateY="-10.0" x="10.0" y="10.0">
+               <image>
+                  <Image url="@../assets/Captura de pantalla 2025-10-29 220304.png" />
+               </image></ImageView>
+            <Label text="Registro de">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="78.0" layoutY="377.0" text="sesión">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="92.0" layoutY="385.0" text="de usuario">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+         </children></VBox>
+    </left>
+
+    <!-- CUERPO PRINCIPAL -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 40;">
+
+            <!-- CONTENEDOR FORMULARIO -->
+            <VBox prefHeight="437.0" prefWidth="620.0" spacing="15" style="-fx-background-color: #e0e0e0;                          -fx-padding: 30;                          -fx-background-radius: 5;                          -fx-border-color: #aaa;                          -fx-border-radius: 5;" translateY="45.0">
+
+                <!-- Nombre -->
+                <VBox spacing="5">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Nombre(s)*:" />
+                    <TextField fx:id="txtNombre" />
+                </VBox>
+
+                <!-- Apellidos -->
+                <VBox spacing="5">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Apellidos*:" />
+                    <TextField fx:id="txtApellidos" />
+                </VBox>
+
+                <!-- Correo -->
+                <VBox spacing="5">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Correo Electrónico*:" />
+                    <TextField fx:id="txtCorreo" />
+                </VBox>
+
+                <!-- Contraseña -->
+                <VBox spacing="5">
+               <Label layoutX="10.0" layoutY="10.0" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Contraseña*:" />
+                    <PasswordField fx:id="txtContrasena" />
+                </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Confirmar Contraseña*:" />
+                  <PasswordField fx:id="txtContrasena1" />
+               </children>
+            </VBox>
+
+                <!-- BOTÓN GUARDAR -->
+                <HBox alignment="CENTER" style="-fx-padding: 15 0 0 0;">
+                    <Button fx:id="btnGuardar" onAction="#onSaveUser" style="-fx-background-color: white;                                    -fx-border-color: #444;                                    -fx-background-radius: 5;                                    -fx-border-radius: 5;                                    -fx-font-weight: bold;                                    -fx-pref-width: 120;                                    -fx-pref-height: 35;" text="Registrar" />
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>
