@@ -8,9 +8,8 @@ module mx.edu.utez.registrodeusuarios {
     opens mx.edu.utez.registrodeusuarios.utils to javafx.fxml;
     opens mx.edu.utez.registrodeusuarios to javafx.graphics, javafx.fxml;
     opens mx.edu.utez.registrodeusuarios.modelo to javafx.fxml;
-   // opens mx.edu.utez.registrodeusuarios.controllers to javafx.fxml;
+    opens mx.edu.utez.registrodeusuarios.controllers.user to javafx.fxml;
     
     exports mx.edu.utez.registrodeusuarios.utils;
     exports mx.edu.utez.registrodeusuarios.modelo;
-   // exports mx.edu.utez.registrodeusuarios.controllers;
 }

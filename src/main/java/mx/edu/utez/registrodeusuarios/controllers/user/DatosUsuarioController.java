@@ -3,13 +3,21 @@ package mx.edu.utez.registrodeusuarios.controllers.user;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+import mx.edu.utez.registrodeusuarios.modelo.User;
 import mx.edu.utez.registrodeusuarios.modelo.Usuario;
+import mx.edu.utez.registrodeusuarios.modelo.dao.UserDao;
+import mx.edu.utez.registrodeusuarios.utils.WindowUtils;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DatosUsuarioController implements Initializable {
@@ -29,6 +37,9 @@ public class DatosUsuarioController implements Initializable {
     @FXML
     private TableColumn<Usuario, Void> colAcciones;
 
+    @FXML
+    private Button btnRegistro;
+
     private ObservableList<Usuario> usuarios;
 
     @Override
@@ -39,7 +50,10 @@ public class DatosUsuarioController implements Initializable {
     }
 
     private void configurarColumnas() {
-        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colNombre.setCellValueFactory(cellData -> {
+            Usuario usuario = cellData.getValue();
+            return new javafx.beans.property.SimpleStringProperty(usuario.getNombreCompleto());
+        });
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
         colEstado.setCellValueFactory(new PropertyValueFactory<>("estado"));
     }
@@ -52,27 +66,17 @@ public class DatosUsuarioController implements Initializable {
             private final HBox hbox = new HBox(5, btnVer, btnEditar, btnToggle);
 
             {
-                // Configurar estilos de los botones
                 configurarEstilosBotones();
-                
-                // Configurar eventos de los botones
                 configurarEventosBotones();
             }
 
             private void configurarEstilosBotones() {
-                // Botón Ver
                 btnVer.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; " +
                                "-fx-padding: 5px 10px; -fx-border-radius: 3px; -fx-cursor: hand;");
-                
-                // Botón Editar
                 btnEditar.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white; " +
                                   "-fx-padding: 5px 10px; -fx-border-radius: 3px; -fx-cursor: hand;");
-                
-                // Botón Toggle
                 btnToggle.setStyle("-fx-background-color: #FF9800; -fx-text-fill: white; " +
                                   "-fx-padding: 5px 10px; -fx-border-radius: 3px; -fx-cursor: hand;");
-                
-                // Estilo del contenedor
                 hbox.setStyle("-fx-alignment: center;");
             }
 
@@ -92,7 +96,6 @@ public class DatosUsuarioController implements Initializable {
                     toggleEstado(usuario);
                 });
 
-                // Efectos hover
                 configurarEfectosHover();
             }
 
@@ -134,18 +137,33 @@ public class DatosUsuarioController implements Initializable {
     private void cargarDatos() {
         usuarios = FXCollections.observableArrayList();
         
-        // Agregar datos de ejemplo
-        usuarios.add(new Usuario("Ramiro López Delgado", "RamiroLopez@gmail.com", "Inactivo"));
-        usuarios.add(new Usuario("Anna Rosalez Benitez", "AnnaRosalez@gmail.com", "Activo"));
-        usuarios.add(new Usuario("Carlos Mendoza Ruiz", "CarlosMendoza@gmail.com", "Inactivo"));
-        usuarios.add(new Usuario("María González Silva", "MariaGonzalez@gmail.com", "Activo"));
-        usuarios.add(new Usuario("José Pérez Torres", "JosePerez@gmail.com", "Inactivo"));
-        usuarios.add(new Usuario("Laura Sánchez Díaz", "LauraSanchez@gmail.com", "Activo"));
-        usuarios.add(new Usuario("Roberto Vega López", "RobertoVega@gmail.com", "Inactivo"));
-        usuarios.add(new Usuario("Ana Martínez Cruz", "AnaMartinez@gmail.com", "Activo"));
-        usuarios.add(new Usuario("Diego Herrera Ramos", "DiegoHerrera@gmail.com", "Inactivo"));
-        
-        tableViewUsuarios.setItems(usuarios);
+        try {
+            UserDao dao = new UserDao();
+            List<User> users = dao.getAllUsers();
+            
+            for (User user : users) {
+                String estado = dao.getEstadoByCorreo(user.getCorreo());
+                if (estado == null) {
+                    estado = "ACTIVO";
+                }
+                Usuario usuario = new Usuario(
+                    user.getNombre(),
+                    user.getApellidos(),
+                    user.getCorreo(),
+                    estado
+                );
+                usuarios.add(usuario);
+            }
+            
+            tableViewUsuarios.setItems(usuarios);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al cargar usuarios");
+            alert.setContentText("No se pudieron cargar los usuarios desde la base de datos.\n" + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void verUsuario(Usuario usuario) {
@@ -153,29 +171,63 @@ public class DatosUsuarioController implements Initializable {
         alert.setTitle("Ver Usuario");
         alert.setHeaderText("Información del Usuario");
         alert.setContentText("Nombre: " + usuario.getNombre() + "\n" +
+                           "Apellidos: " + usuario.getApellidos() + "\n" +
                            "Correo: " + usuario.getCorreo() + "\n" +
                            "Estado: " + usuario.getEstado());
         alert.showAndWait();
     }
 
     private void editarUsuario(Usuario usuario) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Editar Usuario");
-        alert.setHeaderText("Funcionalidad de Edición");
-        alert.setContentText("Editando usuario: " + usuario.getNombre() + "\n" +
-                           "Esta funcionalidad se implementará próximamente.");
-        alert.showAndWait();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/mx/edu/utez/registrodeusuarios/user/EdiUser.fxml"));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Editar Usuario");
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            
+            EdiUserController controller = loader.getController();
+            controller.cargarUsuario(usuario.getCorreo());
+            controller.setOnGuardarExitoso(() -> {
+                cargarDatos();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al abrir ventana de edición");
+            alert.setContentText("No se pudo abrir la ventana de edición.\n" + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     private void toggleEstado(Usuario usuario) {
-        usuario.toggleEstado();
-        // Refrescar la tabla para mostrar el cambio
-        tableViewUsuarios.refresh();
+        String nuevoEstado = "ACTIVO".equalsIgnoreCase(usuario.getEstado()) ? "INACTIVO" : "ACTIVO";
         
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Estado Cambiado");
-        alert.setHeaderText("Estado actualizado");
-        alert.setContentText("El estado de " + usuario.getNombre() + " ha cambiado a: " + usuario.getEstado());
-        alert.showAndWait();
+        UserDao dao = new UserDao();
+        boolean exito = dao.updateEstado(usuario.getCorreo(), nuevoEstado);
+        
+        if (exito) {
+            usuario.setEstado(nuevoEstado);
+            tableViewUsuarios.refresh();
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Estado Cambiado");
+            alert.setHeaderText("Estado actualizado");
+            alert.setContentText("El estado de " + usuario.getNombreCompleto() + " ha cambiado a: " + nuevoEstado);
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error al actualizar estado");
+            alert.setContentText("No se pudo actualizar el estado del usuario en la base de datos.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void navegarARegistro() {
+        WindowUtils.openNewWindow(btnRegistro, "/mx/edu/utez/registrodeusuarios/user/Registration.fxml", "Registro de Usuario");
     }
 }

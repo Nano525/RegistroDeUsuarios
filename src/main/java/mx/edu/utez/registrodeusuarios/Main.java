@@ -10,16 +10,24 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/mx/edu/utez/registrodeusuarios/user/Registration.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage newStage = new Stage();
-        newStage.setTitle("Inicio de sesion");
-        newStage.setScene(scene);
-
-        // Hacer la ventana de pantalla completa
-        newStage.setMaximized(true);
-        // Mostrar la nueva ventana
-        newStage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/mx/edu/utez/registrodeusuarios/user/DatosUsuario.fxml"));
+            
+            if (fxmlLoader.getLocation() == null) {
+                return;
+            }
+            
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Datos de Usuarios");
+            stage.setScene(scene);
+            stage.setMinWidth(800);
+            stage.setMinHeight(600);
+            stage.setMaximized(true);
+            stage.show();
+            stage.toFront();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

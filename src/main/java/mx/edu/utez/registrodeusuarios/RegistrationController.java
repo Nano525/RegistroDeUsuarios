@@ -13,6 +13,8 @@ public class RegistrationController {
     @FXML
     private Button btnGuardar;
     @FXML
+    private Button btnRegresar;
+    @FXML
     private TextField txtNombre;
     @FXML
     private TextField txtApellidos;
@@ -25,23 +27,12 @@ public class RegistrationController {
 
     @FXML
     public void onSaveUser(ActionEvent event){
-        //obtener los datos de los campos
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
         String correo = txtCorreo.getText();
         String contrasena = txtContrasena.getText();
         String contrasena1 = txtContrasena1.getText();
 
-        // Validar que todos los campos estén llenos
-        System.out.println("=== VALIDACIÓN DE CAMPOS ===");
-        System.out.println("Nombre: '" + nombre + "'");
-        System.out.println("Apellidos: '" + apellidos + "'");
-        System.out.println("Correo: '" + correo + "'");
-        System.out.println("Contraseña: '" + contrasena + "'");
-        System.out.println("Contraseña: '" + contrasena + "'");
-
-
-        // Verificar campos vacíos
         if (nombre == null || nombre.trim().isEmpty()) {
             showError("El nombre  es obligatoria");
             return;
@@ -67,10 +58,6 @@ public class RegistrationController {
             return;
         }
 
-
-
-
-        //crear un nuevo usuario
         User u = new User(nombre,apellidos,correo,contrasena);
         UserDao dao = new UserDao();
 
@@ -81,14 +68,11 @@ public class RegistrationController {
             alert.setContentText("El Usuario se registrado correctamente");
             alert.showAndWait();
 
-            // Limpiar los campos después del registro exitoso
             txtNombre.clear();
             txtApellidos.clear();
             txtCorreo.clear();
             txtContrasena.clear();
             txtContrasena1.clear();
-
-
         }else  {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Registro Fallido");
@@ -96,7 +80,6 @@ public class RegistrationController {
             alert.setContentText("Ingrese todos los datos correctamente");
             alert.showAndWait();
         }
-
     }
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -104,6 +87,11 @@ public class RegistrationController {
         alert.setHeaderText("Campo obligatorio vacío");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void regresarADatosUsuario() {
+        WindowUtils.switchWindow(btnRegresar, "/mx/edu/utez/registrodeusuarios/user/DatosUsuario.fxml", "Datos de Usuarios");
     }
 
 }

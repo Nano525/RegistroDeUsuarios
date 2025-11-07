@@ -19,10 +19,38 @@ public class WindowUtils {
             newStage.show();
             currentStage.close();
         }catch(IOException e){
-            System.err.println("Error al cargar FXML: "+e.getMessage());
             e.printStackTrace();
         }catch(Exception e){
-            System.err.println("Error inesperado: "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static void openNewWindow(Node referenceNode, String fxmlPath, String title) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(WindowUtils.class.getResource(fxmlPath));
+            
+            if (fxmlLoader.getLocation() == null) {
+                return;
+            }
+            
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+            newStage.setTitle(title);
+            newStage.setScene(scene);
+            newStage.setMinWidth(800);
+            newStage.setMinHeight(600);
+            newStage.setMaximized(true);
+            
+            if (referenceNode != null && referenceNode.getScene() != null) {
+                Stage parentStage = (Stage) referenceNode.getScene().getWindow();
+                newStage.initOwner(parentStage);
+            }
+            
+            newStage.show();
+            newStage.toFront();
+        }catch(IOException e){
+            e.printStackTrace();
+        }catch(Exception e){
             e.printStackTrace();
         }
     }

@@ -11,6 +11,14 @@
     <left>
         <VBox alignment="CENTER" prefWidth="200" style="-fx-background-color: #B4B3B2;">
          <children>
+            <Region prefHeight="20.0" />
+            <!-- Botón de Regreso -->
+            <HBox alignment="CENTER" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnRegresar" onAction="#regresarADatosUsuario" prefWidth="150.0" prefHeight="40.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-border-radius: 5; -fx-background-radius: 5; -fx-cursor: hand;" text="← Regresar" />
+               </children>
+            </HBox>
+            <Region prefHeight="20.0" />
             <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" translateY="-10.0" x="10.0" y="10.0">
                <image>
                   <Image url="@../assets/Captura de pantalla 2025-10-29 220304.png" />
